@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu118.mapper.custom_mapper.CustomBomMapper">
+
+	<resultMap id="BaseResultMap" type="com.edu118.po.Bom">
+		<result column="bom_id" jdbcType="VARCHAR" property="bomId" />
+	    <result column="product_id" jdbcType="INTEGER" property="productId" />
+	    <result column="parts_id" jdbcType="INTEGER" property="partsId" />
+	    <result column="unit" jdbcType="VARCHAR" property="unit" />
+	    <result column="count" jdbcType="INTEGER" property="count" />
+	    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+	</resultMap>
+
+	<insert id="insertManyBOM" parameterType="java.util.Map" >
+		insert into bom (bom_id, product_id, parts_id,unit, count, remarks)
+    	values 
+    	
+    	<foreach item="parts" collection="bomList" separator=",">
+	        (#{bomId}, #{productId}, #{parts.partsId},#{parts.unit}, #{parts.count}, #{parts.remarks})
+	 	</foreach>
+	</insert>
+	
+	
+	<resultMap id="BomDataMap" type="com.edu118.po.CustomBomBean">
+		<result column="bom_id" jdbcType="VARCHAR" property="bomId" />
+	    <result column="parts_id" jdbcType="INTEGER" property="partsId" />
+	    <result column="unit" jdbcType="VARCHAR" property="unit" />
+	    <result column="count" jdbcType="INTEGER" property="count" />
+	    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+	    <result column="parts_name" jdbcType="VARCHAR" property="partsName" />
+	    <result column="supplier_id" jdbcType="VARCHAR" property="supplierId" />
+	    <result column="type_num" jdbcType="VARCHAR" property="typeNum" />
+	    
+	</resultMap>
+	<!-- 联表查询 -->
+	<select id="selectBomData" parameterType="Integer" resultMap="BomDataMap">
+		SELECT   m.`bom_id`, m.`product_id`, m.`parts_id`, m.`unit`, m.`count`, m.`remarks` ,p.`parts_name`, p.`supplier_id`, p.`type_num`
+		FROM `bom` m, `parts` p 
+		WHERE	m.`parts_id` = p.`parts_id` AND m.`product_id` = #{productId}
+	</select>
+</mapper>

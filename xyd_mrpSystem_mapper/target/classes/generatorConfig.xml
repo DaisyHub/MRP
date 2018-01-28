@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!-- <properties resource="db.properties" /> -->    
+	<!-- 如果details显示JDBC错误，手动给出mysql的jar地址 -->
+	<classPathEntry location="E:\Maven_Repo\mysql\mysql-connector-java\5.1.38\mysql-connector-java-5.1.38.jar" /> 
+	<context id="testTables" targetRuntime="MyBatis3">
+		
+		<plugin type="com.edu118.pagingbean.MySQLPaginationPlugin"></plugin>
+		
+		<commentGenerator>
+			<!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+			<property name="suppressAllComments" value="true" />
+		</commentGenerator>
+		<!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
+		<!-- <jdbcConnection driverClass="${jdbc.driver}"    
+                        connectionURL="${jdbc.url}"    
+                        userId="${jdbc.username}"    
+                        password="${jdbc.password}">    
+        </jdbcConnection>  -->
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver"
+			connectionURL="jdbc:mysql://localhost:3306/mrp_ssm" 
+			userId="root"
+			password="hz">
+		</jdbcConnection>
+		
+		<!-- <jdbcConnection driverClass="oracle.jdbc.OracleDriver" 
+			connectionURL="jdbc:oracle:thin:@127.0.0.1:1521:edu118" 
+			userId="root" 
+			password="123456"> 
+		</jdbcConnection> -->
+
+		<!-- 默认false，把JDBC DECIMAL 和 NUMERIC 类型解析为 Integer，为 true时把JDBC DECIMAL 
+			和 NUMERIC 类型解析为java.math.BigDecimal -->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<!-- targetProject:生成PO类的位置 -->
+		<javaModelGenerator targetPackage="com.edu118.po"
+			targetProject="xyd_mrpSystem_mapper">
+			<!-- enableSubPackages:是否让schema作为包的后缀 -->
+			<property name="enableSubPackages" value="false" />
+			<!-- 从数据库返回的值被清理前后的空格 -->
+			<property name="trimStrings" value="true" />
+		</javaModelGenerator>
+		
+		<!-- targetProject:mapper映射文件生成的位置 -->
+		<sqlMapGenerator targetPackage="com.edu118.mapper"
+			targetProject="xyd_mrpSystem_mapper">
+			<!-- enableSubPackages:是否让schema作为包的后缀 -->
+			<property name="enableSubPackages" value="false" />
+		</sqlMapGenerator>
+		
+		<!-- targetPackage：mapper接口生成的位置 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.edu118.mapper" targetProject="xyd_mrpSystem_mapper">
+			<!-- enableSubPackages:是否让schema作为包的后缀 -->
+			<property name="enableSubPackages" value="false" />
+		</javaClientGenerator>
+		
+		<!-- schema：指定数据库，tableName：指定数据库表 
+			 domainObjectName：指定转换类名，可省略，省略后类名就是表名
+		-->
+		
+		<!-- <table schema="mrp_ssm" tableName="parts" domainObjectName="Parts" />
+		<table schema="mrp_ssm" tableName="supplier" domainObjectName="Supplier" />
+		<table schema="mrp_ssm" tableName="type" domainObjectName="Type" />
+		<table schema="mrp_ssm" tableName="unit" domainObjectName="Unit" /> 
+		<table schema="mrp_ssm" tableName="product" domainObjectName="Product" />-->
+		<table schema="mrp_ssm" tableName="bom" domainObjectName="Bom" />
+
+		<!-- 有些表的字段需要指定java类的属性  -->
+		<!-- <table schema="" tableName=""> 
+			<columnOverride column="" javaType="" /> 
+		</table> -->
+	</context>
+</generatorConfiguration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

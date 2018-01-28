@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu118.mapper.custom_mapper.CustomProductMapper">
+
+	<resultMap id="BaseResultMap" type="com.edu118.po.CustomProduct">
+		<association property="product" javaType="com.edu118.po.Product">
+			<id column="product_id" jdbcType="INTEGER" property="productId" />
+		    <result column="type_num" jdbcType="VARCHAR" property="typeNum" />
+		    <result column="pid" jdbcType="INTEGER" property="pid" />
+		    <result column="unit" jdbcType="VARCHAR" property="unit" />
+		    <result column="count" jdbcType="INTEGER" property="count" />
+		    <result column="date" jdbcType="TIMESTAMP" property="date" />
+		    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+		</association>
+		<association property="productName" javaType="com.edu118.po.ProductName">
+			<id column="pid" jdbcType="INTEGER" property="pid" />
+		    <result column="pname" jdbcType="VARCHAR" property="pname" />
+		    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+		</association>
+	</resultMap>
+
+	<select id="selectAllProduct" resultMap="BaseResultMap">
+		SELECT  p.`product_id`,  p.`type_num`,  p.`pid`, pn.`pname`, p.`unit`,  p.`count`,  p.`date`,  p.`remarks` 
+		FROM  `product`  p,`product_name` pn
+		WHERE p.`pid` = pn.`pid`
+		
+	</select>
+</mapper>

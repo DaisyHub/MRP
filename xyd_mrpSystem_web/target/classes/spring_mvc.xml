@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+	
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+		
+		http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context-3.2.xsd">
+
+	<context:component-scan base-package="com.edu118.action" />
+
+	<!-- 配置默认的Servlet程序处理 -->
+	<mvc:default-servlet-handler />
+
+	<!-- 配置Spring MVC相关操作方式 告诉系统，Spring MVC直接通过注解的方式进行配置使用 -->
+	<mvc:annotation-driven validator="validator" />
+	
+	<bean id="validator"
+		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+
+	<!-- 配置项目之中所需要使用的拦截器程序类 -->
+	<!-- <mvc:interceptors>		
+		<mvc:interceptor>
+			<mvc:mapping path="/pages/**/*.action" />
+			<bean class="com.edu118.interceptor.ValidationInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors> -->
+
+	<!-- 文件上传 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!--上传文件的最大容量 100KB -->
+		<property name="maxUploadSize" value="102400" />
+		<!--上传文件占用最大内存 2M -->
+		<property name="maxInMemorySize" value="2097152" />
+		<!--打开文件上传延迟处理 -->
+		<property name="resolveLazily" value="true" />
+	</bean>
+
+	<!-- 配置了一个全局的异常的跳转映射，只要出现了指定的错误信息，那么就跳转到指定的页面 -->
+	<bean id="exceptionMapping"
+		class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<!-- 上传文件过大时出错后跳转的页面 -->
+				<prop
+					key="org.springframework.web.multipart.MaxUploadSizeExceededException">
+					errors
+				</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="messageSource"
+		class="org.springframework.context.support.ResourceBundleMessageSource">
+		<property name="basenames">
+			<array>
+				<value>message.Messages</value>
+				<value>message.Validations</value>
+				<value>message.Pages</value>
+			</array>
+		</property>
+		<!-- 默认编码 -->
+		<property name="defaultEncoding" value="UTF-8" />
+		<!-- 对资源文件内容缓存时间，单位秒 -->
+		<property name="cacheSeconds" value="120" />
+
+	</bean>
+
+	<!-- 定义跳转的文件的前后缀，视图模式配置 安全访问机制 -->
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/pages/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+</beans>

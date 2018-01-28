@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	
+	<!-- 与Spring进行整合之后，该配置文件只有一人作用：给VO类起别名 -->
+	<typeAliases>
+		<package name="com.edu118" />
+	</typeAliases>
+
+	<!-- 不再需要在此绑定映射文件，由Spring配置后自动加载 -->
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.edu118.mapper.custom_mapper.CustomUserMapper">
+
+	<resultMap id="BaseResultMap" type="com.edu118.po.User">
+		<result column="username" jdbcType="VARCHAR" property="username" />
+		<result column="password" jdbcType="VARCHAR" property="password" />
+		<result column="level" jdbcType="VARCHAR" property="level" />
+		<result column="remarks" jdbcType="VARCHAR" property="remarks" />
+	</resultMap>
+
+	<!-- 根据用户名查询指定的用户数据 -->
+	<select id="findUserByUOrP" parameterType="User" resultMap="BaseResultMap">
+		SELECT `username`,`level`,`remarks` FROM `user` 
+		<where>
+			<if test="username != null and username != ''">
+				`username` = #{username}
+			</if>
+			<if test="password != null and password != ''">
+				AND `password` = #{password}
+			</if>
+		</where>
+	</select>
+	
+	<!-- 模糊分页查询 -->
+	<select id="selectByExampleNotPassword" parameterType="com.edu118.po.UserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    username, level, remarks from user
+    <if test="_parameter != null">
+      <include refid="com.edu118.mapper.UserMapper.Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <if test="myPagin != null">
+      limit #{myPagin.startIndex} , #{myPagin.pageSize}
+    </if>
+  </select>
+</mapper>
