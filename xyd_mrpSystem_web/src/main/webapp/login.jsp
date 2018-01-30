@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>信盈达 MRP管理系统</title>
+<title>MRP管理系统</title>
 <jsp:include page="/WEB-INF/publicPage/public.jsp" />
 <script type="text/javascript" src="${basePath}js/login.js"></script>
 <link href="css/style_log.css" rel="stylesheet">
