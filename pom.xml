@@ -35,7 +35,7 @@
 		<quartz.version>2.3.0</quartz.version>
 		<lombok.version>1.16.18</lombok.version>
 
-		<fastjson.version>1.2.39</fastjson.version>
+		<fastjson.version>1.2.83</fastjson.version>
 	</properties>
 
 	<dependencyManagement>
